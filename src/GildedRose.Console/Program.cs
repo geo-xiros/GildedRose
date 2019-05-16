@@ -1,9 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GildedRose.Console
 {
-    class Program
+    public class Program
     {
+        public Program() { }
+        public Program(string name, int quality, int sellIn)
+        {
+            Items = new List<Item>() { new Item() { Name = name, Quality = quality, SellIn = sellIn } };
+        }
+
         IList<Item> Items;
         static void Main(string[] args)
         {
@@ -109,6 +116,12 @@ namespace GildedRose.Console
                 }
             }
         }
+        public void UpdateQualityFor(int times)
+        {
+            for (; times > 0; times--)
+                UpdateQuality();
+        }
+        public Item this[string name] => Items.FirstOrDefault(i => i.Name.Equals(name));
 
     }
 
