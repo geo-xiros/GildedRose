@@ -57,6 +57,9 @@ namespace GildedRose.Console
                     case "Backstage passes to a TAFKAL80ETC concert":
                         BackstagePassQualityUpdate(i);
                         break;
+                    case "Conjured Mana Cake":
+                        ConjuredQualityUpdate(i);
+                        break;
                     default:
                         NormalQualityUpdate(i);
                         break;
@@ -69,8 +72,11 @@ namespace GildedRose.Console
         }
         private void NormalQualityUpdate(int i)
         {
-            Items[i].Quality--;
-            if (Items[i].SellIn < 0) Items[i].Quality--;
+            Items[i].Quality -= (Items[i].SellIn < 0) ? 2 : 1;
+        }
+        private void ConjuredQualityUpdate(int i)
+        {
+            Items[i].Quality -= (Items[i].SellIn < 0) ? 4 : 2;
         }
         private void BackstagePassQualityUpdate(int i)
         {
@@ -82,13 +88,12 @@ namespace GildedRose.Console
                 Items[i].Quality += 2;
             else
                 Items[i].Quality++;
-
         }
         private void AgedQualityUpdate(int i)
         {
-            Items[i].Quality++;
-            if (Items[i].SellIn < 0) Items[i].Quality++;
+            Items[i].Quality += (Items[i].SellIn < 0) ? 2 : 1;
         }
+
         public void UpdateQualityFor(int times)
         {
             for (; times > 0; times--)
