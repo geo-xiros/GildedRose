@@ -56,17 +56,14 @@ namespace GildedRose.Console
                         if (Items[i].SellIn < 0) deltaQuality++;
                         break;
                     case "Backstage passes to a TAFKAL80ETC concert":
-                        deltaQuality++;
-                        if (Items[i].SellIn < 10)
-                        {
+                        if (Items[i].SellIn < 0)
+                            deltaQuality = -Items[i].Quality;
+                        else if (Items[i].SellIn < 5)
+                            deltaQuality += 3;
+                        else if (Items[i].SellIn < 10)
+                            deltaQuality += 2;
+                        else
                             deltaQuality++;
-                        }
-
-                        if (Items[i].SellIn < 5)
-                        {
-                            deltaQuality++;
-                        }
-                        if (Items[i].SellIn < 0) deltaQuality = -Items[i].Quality;
                         break;
                     default:
                         deltaQuality--;
