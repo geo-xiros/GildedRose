@@ -47,14 +47,13 @@ namespace GildedRose.Console
             {
                 if (Items[i].Name == "Sulfuras, Hand of Ragnaros") continue;
                 int deltaQuality = 0;
-
-                if (Items[i].Name == "Aged Brie" ||
-                    Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+                switch (Items[i].Name)
                 {
-                    deltaQuality++;
-
-                    if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
+                    case "Aged Brie":
+                        deltaQuality++;
+                        break;
+                    case "Backstage passes to a TAFKAL80ETC concert":
+                        deltaQuality++;
                         if (Items[i].SellIn < 11)
                         {
                             deltaQuality++;
@@ -64,36 +63,31 @@ namespace GildedRose.Console
                         {
                             deltaQuality++;
                         }
-                    }
-                }
-                else
-                {
-                    deltaQuality--;
+                        break;
+                    default:
+                        deltaQuality--;
+                        break;
                 }
 
 
                 Items[i].SellIn = Items[i].SellIn - 1;
 
+
                 if (Items[i].SellIn < 0)
                 {
-                    if (Items[i].Name == "Aged Brie")
+
+                    switch (Items[i].Name)
                     {
-                        deltaQuality++;
-                    }
-                    else
-                    {
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
+                        case "Aged Brie":
+                            deltaQuality++;
+                            break;
+                        case "Backstage passes to a TAFKAL80ETC concert":
                             deltaQuality = -Items[i].Quality;
-                        }
-                        else
-                        {
+                            break;
+                        default:
                             deltaQuality--;
-                        }
-
-
+                            break;
                     }
-
                 }
 
                 Items[i].Quality += deltaQuality;
