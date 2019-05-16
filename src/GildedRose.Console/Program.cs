@@ -47,12 +47,13 @@ namespace GildedRose.Console
             {
                 if (Items[i].Name == "Sulfuras, Hand of Ragnaros") continue;
                 int deltaQuality = 0;
-                Items[i].SellIn --;
+                Items[i].SellIn--;
 
                 switch (Items[i].Name)
                 {
                     case "Aged Brie":
                         deltaQuality++;
+                        if (Items[i].SellIn < 0) deltaQuality++;
                         break;
                     case "Backstage passes to a TAFKAL80ETC concert":
                         deltaQuality++;
@@ -65,32 +66,14 @@ namespace GildedRose.Console
                         {
                             deltaQuality++;
                         }
+                        if (Items[i].SellIn < 0) deltaQuality = -Items[i].Quality;
                         break;
                     default:
                         deltaQuality--;
+                        if (Items[i].SellIn < 0) deltaQuality--;
                         break;
                 }
 
-
-                
-
-
-                if (Items[i].SellIn < 0)
-                {
-
-                    switch (Items[i].Name)
-                    {
-                        case "Aged Brie":
-                            deltaQuality++;
-                            break;
-                        case "Backstage passes to a TAFKAL80ETC concert":
-                            deltaQuality = -Items[i].Quality;
-                            break;
-                        default:
-                            deltaQuality--;
-                            break;
-                    }
-                }
 
                 Items[i].Quality += deltaQuality;
                 if (Items[i].Quality < 0) Items[i].Quality = 0;
