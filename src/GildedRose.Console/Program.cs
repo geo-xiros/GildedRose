@@ -46,36 +46,48 @@ namespace GildedRose.Console
             for (var i = 0; i < Items.Count; i++)
             {
                 if (Items[i].Name == "Sulfuras, Hand of Ragnaros") continue;
-                int deltaQuality = 0;
+
                 Items[i].SellIn--;
 
                 switch (Items[i].Name)
                 {
                     case "Aged Brie":
-                        deltaQuality++;
-                        if (Items[i].SellIn < 0) deltaQuality++;
+                        AgedQualityUpdate(i);
                         break;
                     case "Backstage passes to a TAFKAL80ETC concert":
-                        if (Items[i].SellIn < 0)
-                            deltaQuality = -Items[i].Quality;
-                        else if (Items[i].SellIn < 5)
-                            deltaQuality += 3;
-                        else if (Items[i].SellIn < 10)
-                            deltaQuality += 2;
-                        else
-                            deltaQuality++;
+                        BackstagePassQualityUpdate(i);
                         break;
                     default:
-                        deltaQuality--;
-                        if (Items[i].SellIn < 0) deltaQuality--;
+                        NormalQualityUpdate(i);
                         break;
                 }
 
 
-                Items[i].Quality += deltaQuality;
                 if (Items[i].Quality < 0) Items[i].Quality = 0;
                 else if (Items[i].Quality > 50) Items[i].Quality = 50;
             }
+        }
+        private void NormalQualityUpdate(int i)
+        {
+            Items[i].Quality--;
+            if (Items[i].SellIn < 0) Items[i].Quality--;
+        }
+        private void BackstagePassQualityUpdate(int i)
+        {
+            if (Items[i].SellIn < 0)
+                Items[i].Quality = -Items[i].Quality;
+            else if (Items[i].SellIn < 5)
+                Items[i].Quality += 3;
+            else if (Items[i].SellIn < 10)
+                Items[i].Quality += 2;
+            else
+                Items[i].Quality++;
+
+        }
+        private void AgedQualityUpdate(int i)
+        {
+            Items[i].Quality++;
+            if (Items[i].SellIn < 0) Items[i].Quality++;
         }
         public void UpdateQualityFor(int times)
         {
