@@ -43,55 +43,55 @@ namespace GildedRose.Console
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (var item in Items)
             {
-                if (Items[i].Name == "Sulfuras, Hand of Ragnaros") continue;
+                if (item.Name == "Sulfuras, Hand of Ragnaros") continue;
 
-                Items[i].SellIn--;
+                item.SellIn--;
 
-                switch (Items[i].Name)
+                switch (item.Name)
                 {
                     case "Aged Brie":
-                        AgedQualityUpdate(i);
+                        AgedQualityUpdate(item);
                         break;
                     case "Backstage passes to a TAFKAL80ETC concert":
-                        BackstagePassQualityUpdate(i);
+                        BackstagePassQualityUpdate(item);
                         break;
                     case "Conjured Mana Cake":
-                        ConjuredQualityUpdate(i);
+                        ConjuredQualityUpdate(item);
                         break;
                     default:
-                        NormalQualityUpdate(i);
+                        NormalQualityUpdate(item);
                         break;
                 }
 
 
-                if (Items[i].Quality < 0) Items[i].Quality = 0;
-                else if (Items[i].Quality > 50) Items[i].Quality = 50;
+                if (item.Quality < 0) item.Quality = 0;
+                else if (item.Quality > 50) item.Quality = 50;
             }
         }
-        private void NormalQualityUpdate(int i)
+        private void NormalQualityUpdate(Item item)
         {
-            Items[i].Quality -= (Items[i].SellIn < 0) ? 2 : 1;
+            item.Quality -= (item.SellIn < 0) ? 2 : 1;
         }
-        private void ConjuredQualityUpdate(int i)
+        private void ConjuredQualityUpdate(Item item)
         {
-            Items[i].Quality -= (Items[i].SellIn < 0) ? 4 : 2;
+            item.Quality -= (item.SellIn < 0) ? 4 : 2;
         }
-        private void BackstagePassQualityUpdate(int i)
+        private void BackstagePassQualityUpdate(Item item)
         {
-            if (Items[i].SellIn < 0)
-                Items[i].Quality = -Items[i].Quality;
-            else if (Items[i].SellIn < 5)
-                Items[i].Quality += 3;
-            else if (Items[i].SellIn < 10)
-                Items[i].Quality += 2;
+            if (item.SellIn < 0)
+                item.Quality = -item.Quality;
+            else if (item.SellIn < 5)
+                item.Quality += 3;
+            else if (item.SellIn < 10)
+                item.Quality += 2;
             else
-                Items[i].Quality++;
+                item.Quality++;
         }
-        private void AgedQualityUpdate(int i)
+        private void AgedQualityUpdate(Item item)
         {
-            Items[i].Quality += (Items[i].SellIn < 0) ? 2 : 1;
+            item.Quality += (item.SellIn < 0) ? 2 : 1;
         }
 
         public void UpdateQualityFor(int times)
