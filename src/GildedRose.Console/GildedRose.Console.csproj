@@ -41,6 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgedUpdateQuality.cs" />
+    <Compile Include="BackstagePassUpdateQuality.cs" />
+    <Compile Include="ConjuredUpdateQuality.cs" />
+    <Compile Include="IItemUpdater.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="ItemUpdate.cs" />
+    <Compile Include="ItemUpdaterFactory.cs" />
+    <Compile Include="NeverUpdateQuality.cs" />
+    <Compile Include="NormalUpdateQuality.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
