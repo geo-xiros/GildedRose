@@ -46,7 +46,7 @@ namespace GildedRose.Console
             foreach (var item in Items)
             {
 
-                IStatusUpdater updateQuality = new NormalUpdateQuality(item);
+                IItemUpdater updateQuality = new NormalUpdateQuality(item);
 
                 switch (item.Name)
                 {
@@ -76,26 +76,38 @@ namespace GildedRose.Console
         public Item this[string name] => Items.FirstOrDefault(i => i.Name.Equals(name));
 
     }
-    public interface IStatusUpdater
+    public interface IItemUpdater
     {
         void Update();
     }
 
 
-    public abstract class UpdateQuality : IStatusUpdater
+    public abstract class ItemUpdate : IItemUpdater
     {
         protected Item Item;
-        public UpdateQuality(Item item)
+        public ItemUpdate(Item item) { Item = item; }
+
+        public void Update()
         {
-            Item = item;
+            UpdateSellIn();
+            UpdateQuality();
+            ValidateQuality();
         }
 
-        public abstract void Update();
+        protected abstract void UpdateQuality();
+        
+        /// <summary>
+        /// decrease sellin for each day
+        /// </summary>
+        protected virtual void UpdateSellIn()
+        {
+            Item.SellIn--;
+        }
 
         /// <summary>
         /// after updating quality value should not be below zero or above fifty
         /// </summary>
-        protected void ValidateQuality()
+        protected virtual void ValidateQuality()
         {
             if (Item.Quality < 0)
                 Item.Quality = 0;
@@ -103,67 +115,56 @@ namespace GildedRose.Console
                 Item.Quality = 50;
         }
     }
-    public class NeverUpdateQuality : UpdateQuality
+
+    /// <summary>
+    /// items that never update quality
+    /// </summary>
+    public class NeverUpdateQuality : ItemUpdate
     {
         public NeverUpdateQuality(Item item) : base(item) { }
-
-        /// <summary>
-        /// items that never update quality
-        /// </summary>
-        /// <param name="item"></param>
-        public override void Update()
-        {
-            // no action
-        }
+        protected override void UpdateSellIn() {/* No Action */}
+        protected override void UpdateQuality() {/* No Action */}
+        protected override void ValidateQuality() {/* No Action */}
     }
 
-    public class NormalUpdateQuality : UpdateQuality
+    /// <summary>
+    /// quality decreases by one each day 
+    /// and by two after sell date passes
+    /// </summary>
+    public class NormalUpdateQuality : ItemUpdate
     {
         public NormalUpdateQuality(Item item) : base(item) { }
 
-        /// <summary>
-        /// quality decreases by one each day 
-        /// and by two after sell date passes
-        /// </summary>
-        /// <param name="item"></param>
-        public override void Update()
+        protected override void UpdateQuality()
         {
-            Item.SellIn--;
             Item.Quality -= (Item.SellIn < 0) ? 2 : 1;
-            ValidateQuality();
         }
-
     }
 
-    public class ConjuredUpdateQuality : UpdateQuality
+    /// <summary>
+    /// quality decreases twice as fase as normal items
+    /// </summary>
+    public class ConjuredUpdateQuality : ItemUpdate
     {
         public ConjuredUpdateQuality(Item item) : base(item) { }
 
-        /// <summary>
-        /// quality decreases twice as fase as normal items
-        /// </summary>
-        /// <param name="item"></param>
-        public override void Update()
+        protected override void UpdateQuality()
         {
-            Item.SellIn--;
             Item.Quality -= (Item.SellIn < 0) ? 4 : 2;
-            ValidateQuality();
         }
     }
-    public class BackstagePassUpdateQuality : UpdateQuality
+
+    /// <summary>
+    /// quality increases every day by one
+    /// by two for the last ten days before sell date
+    /// by three for the last five days before sell date
+    /// and gets to zero after sell date
+    /// </summary>
+    public class BackstagePassUpdateQuality : ItemUpdate
     {
         public BackstagePassUpdateQuality(Item item) : base(item) { }
-
-        /// <summary>
-        /// quality increases every day by one
-        /// by two for the last ten days before sell date
-        /// by three for the last five days before sell date
-        /// and gets to zero after sell date
-        /// </summary>
-        /// <param name="item"></param>
-        public override void Update()
+        protected override void UpdateQuality()
         {
-            Item.SellIn--;
             if (Item.SellIn < 0)
                 Item.Quality = -Item.Quality;
             else if (Item.SellIn < 5)
@@ -172,23 +173,19 @@ namespace GildedRose.Console
                 Item.Quality += 2;
             else
                 Item.Quality++;
-            ValidateQuality();
         }
     }
-    public class AgedUpdateQuality : UpdateQuality
+
+    /// <summary>
+    /// quality increases by one every day and 
+    /// by two after sell date passes
+    /// </summary>
+    public class AgedUpdateQuality : ItemUpdate
     {
         public AgedUpdateQuality(Item item) : base(item) { }
-
-        /// <summary>
-        /// quality increases by one every day and 
-        /// by two after sell date passes
-        /// </summary>
-        /// <param name="item"></param>
-        public override void Update()
+        protected override void UpdateQuality()
         {
-            Item.SellIn--;
             Item.Quality += (Item.SellIn < 0) ? 2 : 1;
-            ValidateQuality();
         }
     }
 
