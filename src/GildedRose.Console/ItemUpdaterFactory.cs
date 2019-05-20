@@ -10,7 +10,7 @@
             switch (item.Name)
             {
                 case "Sulfuras, Hand of Ragnaros":
-                    return new NoItemUpdate(item);
+                    return new NoItemUpdate();
                 case "Aged Brie":
                     return new AgedItemUpdate(item);
                 case "Backstage passes to a TAFKAL80ETC concert":

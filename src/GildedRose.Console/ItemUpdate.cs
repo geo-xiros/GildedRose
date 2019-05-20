@@ -17,7 +17,7 @@
         /// <summary>
         /// decrease sellin for each day
         /// </summary>
-        protected virtual void UpdateSellIn()
+        private void UpdateSellIn()
         {
             Item.SellIn--;
         }
@@ -25,7 +25,7 @@
         /// <summary>
         /// after updating quality value should not be below zero or above fifty
         /// </summary>
-        protected virtual void ValidateQuality()
+        private void ValidateQuality()
         {
             if (Item.Quality < 0)
                 Item.Quality = 0;
