@@ -12,7 +12,7 @@
         protected override void UpdateQuality()
         {
             if (Item.SellIn < 0)
-                Item.Quality = -Item.Quality;
+                Item.Quality = 0;
             else if (Item.SellIn < 5)
                 Item.Quality += 3;
             else if (Item.SellIn < 10)
