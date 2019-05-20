@@ -10,15 +10,15 @@
             switch (item.Name)
             {
                 case "Sulfuras, Hand of Ragnaros":
-                    return new NeverUpdateQuality(item);
+                    return new NoItemUpdate(item);
                 case "Aged Brie":
-                    return new AgedUpdateQuality(item);
+                    return new AgedItemUpdate(item);
                 case "Backstage passes to a TAFKAL80ETC concert":
-                    return new BackstagePassUpdateQuality(item);
+                    return new BackstagePassItemUpdate(item);
                 case "Conjured Mana Cake":
-                    return new ConjuredUpdateQuality(item);
+                    return new ConjuredItemUpdate(item);
                 default:
-                    return new NormalUpdateQuality(item);
+                    return new NormalItemUpdate(item);
             }
         }
     }

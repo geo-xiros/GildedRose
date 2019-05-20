@@ -4,9 +4,9 @@
     /// quality decreases by one each day 
     /// and by two after sell date passes
     /// </summary>
-    public class NormalUpdateQuality : ItemUpdate
+    public class NormalItemUpdate : ItemUpdate
     {
-        public NormalUpdateQuality(Item item) : base(item) { }
+        public NormalItemUpdate(Item item) : base(item) { }
 
         protected override void UpdateQuality()
         {

@@ -6,9 +6,9 @@
     /// by three for the last five days before sell date
     /// and gets to zero after sell date
     /// </summary>
-    public class BackstagePassUpdateQuality : ItemUpdate
+    public class BackstagePassItemUpdate : ItemUpdate
     {
-        public BackstagePassUpdateQuality(Item item) : base(item) { }
+        public BackstagePassItemUpdate(Item item) : base(item) { }
         protected override void UpdateQuality()
         {
             if (Item.SellIn < 0)
