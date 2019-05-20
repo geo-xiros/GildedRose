@@ -33,6 +33,7 @@ namespace GildedRose.Tests
 
             Assert.Equal(expectedSellIn, gr["Sulfuras, Hand of Ragnaros"].SellIn);
 
+
         }
 
         [Theory]
@@ -41,12 +42,7 @@ namespace GildedRose.Tests
         [InlineData(5, 20, 5, 15)]
         public void QualityShouldBeDegradededByOne(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Test", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Test"].Quality);
-
+            TestItemsQuality("Test", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -55,11 +51,7 @@ namespace GildedRose.Tests
         [InlineData(5, 20, 10, 5)]
         public void QualityShoulDecreaseTwiceAfterSellDatePasses(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Test", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Test"].Quality);
+            TestItemsQuality("Test", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -67,11 +59,7 @@ namespace GildedRose.Tests
         [InlineData(5, 20, 20, 0)]
         public void QualityShoulNeverGetNegative(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Test", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Test"].Quality);
+            TestItemsQuality("Test", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -80,11 +68,7 @@ namespace GildedRose.Tests
         [InlineData(5, 5, 5, 10)]
         public void AgedBrieQualityShouldIncreaseEveryDay(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Aged Brie", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Aged Brie"].Quality);
+            TestItemsQuality("Aged Brie", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -93,11 +77,7 @@ namespace GildedRose.Tests
         [InlineData(5, 5, 9, 18)]
         public void AgedBrieQualityShouldIncreaseTwiceAfterSellDatePassByDay(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Aged Brie", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Aged Brie"].Quality);
+            TestItemsQuality("Aged Brie", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -106,11 +86,7 @@ namespace GildedRose.Tests
         [InlineData(5, 45, 9, 50)]
         public void QualityShouldNeverIncreaseMoreThanFifty(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Aged Brie", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Aged Brie"].Quality);
+            TestItemsQuality("Aged Brie", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -119,11 +95,7 @@ namespace GildedRose.Tests
         [InlineData(5, 10, 7, 10)]
         public void SulfurasQualityShouldNeverChange(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Sulfuras, Hand of Ragnaros", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Sulfuras, Hand of Ragnaros"].Quality);
+            TestItemsQuality("Sulfuras, Hand of Ragnaros", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -132,11 +104,7 @@ namespace GildedRose.Tests
         [InlineData(15, 20, 5, 25)]
         public void BackstageQualityShouldIncreaseByDay(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Backstage passes to a TAFKAL80ETC concert", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Backstage passes to a TAFKAL80ETC concert"].Quality);
+            TestItemsQuality("Backstage passes to a TAFKAL80ETC concert", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -146,11 +114,7 @@ namespace GildedRose.Tests
         [InlineData(15, 20, 10, 35)]
         public void BackstageQualityShouldIncreaseTwiceByDayForTheLastTenDaysBeforeSellDatePasses(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Backstage passes to a TAFKAL80ETC concert", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Backstage passes to a TAFKAL80ETC concert"].Quality);
+            TestItemsQuality("Backstage passes to a TAFKAL80ETC concert", sellIn, quality, updates, expectedQuality);
         }
 
 
@@ -162,11 +126,7 @@ namespace GildedRose.Tests
         [InlineData(15, 20, 15, 50)]
         public void BackstageQualityShouldIncreaseByThreeByDayForTheLastFiveDaysBeforeSellDatePasses(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Backstage passes to a TAFKAL80ETC concert", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Backstage passes to a TAFKAL80ETC concert"].Quality);
+            TestItemsQuality("Backstage passes to a TAFKAL80ETC concert", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -174,11 +134,7 @@ namespace GildedRose.Tests
         [InlineData(15, 20, 18, 0)]
         public void BackstageQualityShouldBeZeroAfterSellDatePasses(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Backstage passes to a TAFKAL80ETC concert", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Backstage passes to a TAFKAL80ETC concert"].Quality);
+            TestItemsQuality("Backstage passes to a TAFKAL80ETC concert", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -187,12 +143,7 @@ namespace GildedRose.Tests
         [InlineData(5, 20, 5, 10)]
         public void ConjuredQualityShouldBeDegradededByTwo(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Conjured Mana Cake", quality, sellIn);
-
-            gr.UpdateQualityFor(updates);
-
-            Assert.Equal(expectedQuality, gr["Conjured Mana Cake"].Quality);
-
+            TestItemsQuality("Conjured Mana Cake", sellIn, quality, updates, expectedQuality);
         }
 
         [Theory]
@@ -201,11 +152,16 @@ namespace GildedRose.Tests
         [InlineData(5, 20, 8, 0)]
         public void ConjuredQualityShoulDecreaseTwiceAsNormalItemsAfterSellDatePasses(int sellIn, int quality, int updates, int expectedQuality)
         {
-            var gr = new Program("Conjured Mana Cake", quality, sellIn);
+            TestItemsQuality("Conjured Mana Cake", sellIn, quality, updates, expectedQuality);
+        }
+
+        private static void TestItemsQuality(string itemName , int sellIn, int quality, int updates, int expectedQuality)
+        {
+            var gr = new Program(itemName, quality, sellIn);
 
             gr.UpdateQualityFor(updates);
 
-            Assert.Equal(expectedQuality, gr["Conjured Mana Cake"].Quality);
+            Assert.Equal(expectedQuality, gr[itemName].Quality);
         }
     }
 }
